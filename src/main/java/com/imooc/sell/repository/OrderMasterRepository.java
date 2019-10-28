@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
+
 /**
  * 订单查询接口
  */
@@ -17,5 +18,5 @@ public interface OrderMasterRepository extends JpaRepository<OrderMaster, String
      * @param pageable
      * @return
      */
-    Page<OrderMaster> findByBuyerOpenid(String buyerOpenid, Pageable pageable);
+     Page<OrderMaster> findByBuyerOpenid(String buyerOpenid, Pageable pageable);
 }

@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://123.56.84.228/sell?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://123.56.84.228:3306/sell?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
 
@@ -15,5 +15,11 @@ spring:
 wechat:
   mpAppId: wxd898fcb01713c658
   mpAppSecret: 29d8a650db31472aa87800e3b0d739f2
+  openAppId: wx6ad144e54af67d87
+  openAppSecret: 91a2ff6d38a2bbccfb7e9f9079108e2e
+  mchId: 1483469312
+  mchKey: c976503d34ca432c601361f969fd8d85
+  keyPath: /var/weixin_cert/h5.p12
+  notifyUrl: http://sell.natapp4.cc/sell/pay/notify
 
 
