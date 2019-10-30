@@ -12,6 +12,7 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
+
 wechat:
   mpAppId: wxd898fcb01713c658
   mpAppSecret: 29d8a650db31472aa87800e3b0d739f2
@@ -22,4 +23,10 @@ wechat:
   keyPath: /var/weixin_cert/h5.p12
   notifyUrl: http://sell.natapp4.cc/sell/pay/notify
 
-
+logging:
+  pattern:
+    console: "%d - %msg%n"
+  path: /var/log/tomcat/
+  file: /var/log/tomcat/sell.log
+  level:
+    com.imooc.LoggerTest: debug
