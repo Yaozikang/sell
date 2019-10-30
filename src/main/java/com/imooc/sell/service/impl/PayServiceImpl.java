@@ -2,6 +2,7 @@ package com.imooc.sell.service.impl;
 
 import com.imooc.sell.dto.OrderDTO;
 import com.imooc.sell.service.PayService;
+import com.imooc.sell.utils.JsonUtil;
 import com.lly835.bestpay.enums.BestPayTypeEnum;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
@@ -25,7 +26,7 @@ public class PayServiceImpl implements PayService {
     private BestPayServiceImpl bestPayService;
 
     @Override
-    public void create(OrderDTO orderDTO) {
+    public PayResponse create(OrderDTO orderDTO) {
         PayRequest payRequest = new PayRequest();
         payRequest.setOpenid(orderDTO.getBuyerOpenid());
         payRequest.setOrderAmount(orderDTO.getOrderAmount().doubleValue());
@@ -33,8 +34,17 @@ public class PayServiceImpl implements PayService {
         payRequest.setOrderName(ORDER_NAME);
         payRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
 
-        log.info("【微信支付】request={}",payRequest);
+        log.info("【微信支付】request={}", JsonUtil.toJson(payRequest));
         PayResponse payResponse = bestPayService.pay(payRequest);
-        log.info("【微信支付】response={}", payResponse);
+        log.info("【微信支付】response={}", JsonUtil.toJson(payResponse));
+
+        return payResponse;
+    }
+
+    @Override
+    public PayResponse notify(String notifyData) {
+        PayResponse payResponse = bestPayService.asyncNotify(notifyData);
+        log.info("【微信支付】异步通知， payResponse={}", JsonUtil.toJson(payResponse));
+        return payResponse;
     }
 }
