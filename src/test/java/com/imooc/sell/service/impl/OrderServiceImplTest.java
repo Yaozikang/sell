@@ -4,7 +4,6 @@ import com.imooc.sell.dataobject.OrderDetail;
 import com.imooc.sell.dto.OrderDTO;
 import com.imooc.sell.enums.OrderStatusEnum;
 import com.imooc.sell.enums.PayStatusEnum;
-import com.sun.org.apache.regexp.internal.RE;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,8 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,32 +31,33 @@ public class OrderServiceImplTest {
 
     @Test
     public void create() throws Exception{
+        for (int i = 0 ; i< 50 ; i++) {
+            OrderDTO orderDTO = new OrderDTO();
+            orderDTO.setBuyerName("要子康");
+            orderDTO.setBuyerAddress("石家庄");
+            orderDTO.setBuyerPhone("13643296110");
+            orderDTO.setBuyerOpenid(BUYER_OPENID);
 
-        OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setBuyerName("要子康");
-        orderDTO.setBuyerAddress("石家庄");
-        orderDTO.setBuyerPhone("13643296110");
-        orderDTO.setBuyerOpenid(BUYER_OPENID);
+            List<OrderDetail> orderDetailList = new ArrayList<>();
 
-        List<OrderDetail> orderDetailList = new ArrayList<>();
+            OrderDetail o1 = new OrderDetail();
+            o1.setProductId("123");
+            o1.setProductQuantity(1);
 
-        OrderDetail o1 = new OrderDetail();
-        o1.setProductId("123");
-        o1.setProductQuantity(1);
+            orderDetailList.add(o1);
 
-        orderDetailList.add(o1);
+            OrderDetail o2 = new OrderDetail();
+            o2.setProductId("123");
+            o2.setProductQuantity(2);
 
-        OrderDetail o2 = new OrderDetail();
-        o2.setProductId("123");
-        o2.setProductQuantity(2);
+            orderDetailList.add(o1);
+            orderDetailList.add(o2);
 
-        orderDetailList.add(o1);
-        orderDetailList.add(o2);
+            orderDTO.setOrderDetailList(orderDetailList);
 
-        orderDTO.setOrderDetailList(orderDetailList);
-
-        OrderDTO result = orderService.create(orderDTO);
-        log.info("创建订单 result=", result);
+            OrderDTO result = orderService.create(orderDTO);
+            log.info("创建订单 result=", result);
+        }
 
     }
 
@@ -98,5 +96,13 @@ public class OrderServiceImplTest {
         OrderDTO orderDTO = orderService.findOne(ORDER_ID);
         OrderDTO result = orderService.paid(orderDTO);
         Assert.assertEquals(PayStatusEnum.SUCCESS.getCode(), result.getPayStatus());
+    }
+
+    @Test
+    public void list(){
+        PageRequest request = new PageRequest(0,2);
+        Page<OrderDTO> orderDTOPage = orderService.findList(request);
+        //Assert.assertNotEquals(0,orderDTOPage.getTotalElements());
+        Assert.assertTrue("查询所有订单列表", orderDTOPage.getTotalElements() > 0);
     }
 }

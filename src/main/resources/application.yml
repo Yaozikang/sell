@@ -14,14 +14,17 @@ spring:
 
 
 wechat:
-  mpAppId: wxd898fcb01713c658
-  mpAppSecret: 29d8a650db31472aa87800e3b0d739f2
+  mpAppId: wxb608c570d8bbfe93  //正式个人
+  mpAppSecret: d407dfad2d7d5c0fdf95e822f019f194  //正式个人
+
+
   openAppId: wx6ad144e54af67d87
   openAppSecret: 91a2ff6d38a2bbccfb7e9f9079108e2e
   mchId: 1483469312
   mchKey: c976503d34ca432c601361f969fd8d85
   keyPath: /var/weixin_cert/h5.p12
   notifyUrl: http://sell.natapp4.cc/sell/pay/notify
+
 
 logging:
   pattern:

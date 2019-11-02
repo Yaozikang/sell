@@ -2,9 +2,11 @@ package com.imooc.sell.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.imooc.sell.dataobject.OrderDetail;
+import com.imooc.sell.enums.OrderStatusEnum;
+import com.imooc.sell.enums.PayStatusEnum;
+import com.imooc.sell.utils.EnumUtil;
 import com.imooc.sell.utils.serializer.Date2LongSerializer;
 import lombok.Data;
-import lombok.Getter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
@@ -54,5 +56,13 @@ public class OrderDTO {
     /** 订单明细集合*/
     @Transient
     private List<OrderDetail> orderDetailList;
+
+    public OrderStatusEnum getOrderStatusEnum(){
+        return EnumUtil.getByCode(orderStatus, OrderStatusEnum.class);
+    }
+
+    public PayStatusEnum getPayStatusEnum(){
+        return EnumUtil.getByCode(payStatus, PayStatusEnum.class);
+    }
 
 }

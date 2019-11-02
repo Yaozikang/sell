@@ -1,10 +1,17 @@
 package com.imooc.sell.service.impl;
 
 import com.imooc.sell.dto.OrderDTO;
+import com.imooc.sell.enums.ResultEnum;
+import com.imooc.sell.exception.SellException;
+import com.imooc.sell.service.OrderService;
 import com.imooc.sell.service.PayService;
+import com.imooc.sell.utils.JsonUtil;
+import com.imooc.sell.utils.MathUtil;
 import com.lly835.bestpay.enums.BestPayTypeEnum;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
+import com.lly835.bestpay.model.RefundRequest;
+import com.lly835.bestpay.model.RefundResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,9 +79,28 @@ public class PayServiceImpl implements PayService {
             throw new SellException(ResultEnum.WXPAY_NOTIFY_MONEY_VERIFY_ERROR);
         }
 
-
         //修改订单的支付状态
         orderService.paid(orderDTO);
+
         return payResponse;
+    }
+
+    /**
+     * 退款
+     * @param orderDTO
+     */
+    @Override
+    public RefundResponse refund(OrderDTO orderDTO) {
+        RefundRequest refundRequest = new RefundRequest();
+        refundRequest.setOrderId(orderDTO.getOrderId());
+        refundRequest.setOrderAmount(orderDTO.getOrderAmount().doubleValue());
+        refundRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
+
+        log.info("【微信退款】 request={}", refundRequest);
+        RefundResponse refundResponse = bestPayService.refund(refundRequest);
+        log.info("【微信退款】 response={}", refundResponse);
+
+        return refundResponse;
+
     }
 }
