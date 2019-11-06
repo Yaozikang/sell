@@ -5,7 +5,6 @@ import com.imooc.sell.dto.CartDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-
 import java.util.List;
 
 /**
@@ -51,4 +50,18 @@ public interface ProductService {
      * @param cartDTOList
      */
     void decreaseStock(List<CartDTO> cartDTOList);
+
+    /**
+     * 商品上架
+     * @param productId
+     * @return
+     */
+    ProductInfo onSale(String productId);
+
+    /**
+     * 商品下架
+     * @param productId
+     * @return
+     */
+    ProductInfo offSale(String productId);
 }

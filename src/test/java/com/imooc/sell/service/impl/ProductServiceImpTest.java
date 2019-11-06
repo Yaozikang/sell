@@ -14,8 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProductServiceImpTest {
@@ -57,5 +55,17 @@ public class ProductServiceImpTest {
 
         ProductInfo result = productService.save(productInfo);
         Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void onSale(){
+        ProductInfo result = productService.onSale("1");
+        Assert.assertEquals(ProductStatusEnum.UP, result.getProductStatusEnum());
+    }
+
+    @Test
+    public void offSale(){
+        ProductInfo result = productService.offSale("1");
+        Assert.assertEquals(ProductStatusEnum.DOWN, result.getProductStatusEnum());
     }
 }
