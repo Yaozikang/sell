@@ -12,6 +12,10 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
+  redis:
+    host: 123.56.84.228
+    port: 6379
+
 
 wechat:
   mpAppId: wxb608c570d8bbfe93  //正式个人
@@ -20,10 +24,19 @@ wechat:
 
   openAppId: wx6ad144e54af67d87
   openAppSecret: 91a2ff6d38a2bbccfb7e9f9079108e2e
+
   mchId: 1483469312
   mchKey: c976503d34ca432c601361f969fd8d85
   keyPath: /var/weixin_cert/h5.p12
   notifyUrl: http://sell.natapp4.cc/sell/pay/notify
+  templateId:
+    orderStatus: c976503d34ca432c601361f969fd8d85
+
+projectUrl:
+  wechatMpAutorize: http://localhost:8080
+  wechatOpenAutorize: http://localhost:8080
+  sell:
+
 
 
 logging:

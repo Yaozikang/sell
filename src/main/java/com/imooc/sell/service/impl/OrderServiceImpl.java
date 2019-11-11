@@ -12,9 +12,7 @@ import com.imooc.sell.enums.ResultEnum;
 import com.imooc.sell.exception.SellException;
 import com.imooc.sell.repository.OrderDetailRepository;
 import com.imooc.sell.repository.OrderMasterRepository;
-import com.imooc.sell.service.OrderService;
-import com.imooc.sell.service.PayService;
-import com.imooc.sell.service.ProductService;
+import com.imooc.sell.service.*;
 import com.imooc.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -49,6 +47,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private PushMessageService pushMessageService;
+
+    @Autowired
+    private WebSocket webSocket;
 
     /**
      * 创建订单接口实现方法
@@ -115,6 +119,9 @@ public class OrderServiceImpl implements OrderService {
         ).collect(Collectors.toList());
 
         productService.decreaseStock(cartDTOList);
+
+        //发送websocket消息
+        webSocket.onMessage("有新的订单" + orderDTO.getOrderId());
 
         return orderDTO;
     }
@@ -216,7 +223,11 @@ public class OrderServiceImpl implements OrderService {
             log.error("【更新订单】更新订单失败， orderMaster={}", orderMaster);
             throw  new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
-        return orderDTO;
+
+        //推送微信模板消息
+        pushMessageService.orderStatus(orderDTO);
+
+       return orderDTO;
     }
 
     @Override
