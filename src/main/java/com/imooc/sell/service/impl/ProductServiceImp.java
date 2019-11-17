@@ -8,6 +8,9 @@ import com.imooc.sell.exception.SellException;
 import com.imooc.sell.repository.ProductInfoRepository;
 import com.imooc.sell.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ import java.util.List;
  * 实现商品信息service
  */
 @Service
+@CacheConfig(cacheNames = "product")
 public class ProductServiceImp implements ProductService {
 
     /**
@@ -33,6 +37,7 @@ public class ProductServiceImp implements ProductService {
      * @return
      */
     @Override
+    @Cacheable(cacheNames = "product", key = "123")
     public ProductInfo findOne(String productId) {
         return repository.findOne(productId);
     }
@@ -62,6 +67,7 @@ public class ProductServiceImp implements ProductService {
      * @return
      */
     @Override
+    @CachePut(cacheNames = "product", key = "123")
     public ProductInfo save(ProductInfo productInfo) {
         return repository.save(productInfo);
     }

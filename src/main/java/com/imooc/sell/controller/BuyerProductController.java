@@ -44,6 +44,7 @@ public class BuyerProductController {
      */
 
     @GetMapping("/list")
+    //@Cacheable(cacheNames = "product", key = "123")
     public ResultVO list(){
         /** 查询所有上架上商品 */
         List<ProductInfo> productInfoList = productService.findUpAll();

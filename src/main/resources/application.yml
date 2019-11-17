@@ -40,9 +40,13 @@ projectUrl:
 
 
 logging:
+  level:
+    com:
+      imooc:
+        sell:
+          dataobject:
+            mapper: trace
   pattern:
     console: "%d - %msg%n"
   path: /var/log/tomcat/
   file: /var/log/tomcat/sell.log
-  level:
-    com.imooc.LoggerTest: debug
